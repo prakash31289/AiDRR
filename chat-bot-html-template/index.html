@@ -34,25 +34,26 @@
 <div class="chat-screen">
     <div class="chat-header">
         <div class="chat-header-title">
-            ASK AiDRR
+            <b>AiDrr</b>
         </div>
     </div>
     <div class="chat-mail">
         <div class="row">
             <div class="chat-body ">
-                <div class="chat-bubble you">Hi 👋, i am Ask AiDRR bot, ready to help you.</div>
+                <div class="chat-bubble you">Hi 👋, i am <b>AiDrr</b> bot, ready to help you.</div>
                 <div class="chat-bubble you">Please type your query or simply select below options</div>
                 <div class="col-md-12 you">
                     <select class="form-control  select2_el" id="selCat">
-                        <option selected="selected">What do you want to ask?</option>
+                        <option selected="selected">Select an option</option>
                         <option>Service Request</option>
                         <option>Attendence</option>
                         <option>Holiday</option>
                         <option>ePayslip</option>
                         <option>Finance</option>
-                        <option>Other</option>
+                        
                     </select>
                 </div>
+                
             </div>
         </div>
         <div class="row" style="position: fixed;">
@@ -84,7 +85,7 @@
     </div>
 </div>
 <div class="chat-bot-icon">
-    <img src="img/we-are-here.svg"/>
+    <!-- <img src="img/we-are-here.svg"/> -->
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square animate"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x "><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 </div>
@@ -121,12 +122,12 @@
             $(this).children('svg').toggleClass('animate');
             $('.chat-screen').toggleClass('show-chat');
         });
-        $('.chat-mail button').click(function () {
-            $('.chat-mail').addClass('hide');
-            $('.chat-body').removeClass('hide');
-            $('.chat-input').removeClass('hide');
-            $('.chat-header-option').removeClass('hide');
-        });
+        // $('.chat-mail button').click(function () {
+        //     $('.chat-mail').addClass('hide');
+        //     $('.chat-body').removeClass('hide');
+        //     $('.chat-input').removeClass('hide');
+        //     $('.chat-header-option').removeClass('hide');
+        // });
         $('.end-chat').click(function () {
             $('.chat-body').addClass('hide');
             $('.chat-input').addClass('hide');
@@ -154,38 +155,152 @@
             }
         });
 
+        var req = "";
+
         function sendMsg(){
             $('#selCat').hide();
             $('.chat-body').html($('.chat-body').html() + '<div class="chat-bubble me">'+ $("#qMes").val() +'</div>');
             var mes = $("#qMes").val().toLowerCase();
             $("#qMes").val('');
-            var dt = new Date();
-            var ranID = dt.getHours() + dt.getMinutes() + dt.getSeconds();
-            $('.chat-body').html($('.chat-body').html() + '<div class="chat-bubble you" id="loadIMG'+ranID+'"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto;display: block;shape-rendering: auto;width: 43px;height: 20px;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">     <circle cx="0" cy="44.1678" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.6s"></animate></circle> <circle cx="45" cy="43.0965" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.39999999999999997s"></animate></circle> <circle cx="90" cy="52.0442" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.19999999999999998s"></animate></circle></svg></div>');
-            scrDown();
+            var ranID = loadImg();
             window.setTimeout(function(){
                 $('#loadIMG'+ranID).hide();
                 console.log(mes + '' + mes.indexOf('request') + '' + mes.indexOf('VPN'));
-                if((mes.indexOf('request') != -1) && (mes.indexOf('vpn') != -1)){
-                    $('.chat-body').html($('.chat-body').html() + '<div class="chat-bubble you"> Sure!</div><div class="chat-bubble you"> Let me see how i can help you</div><div class="chat-bubble you">click here</div>');
-                    scrDown();   
+                if(mes.indexOf('request') != -1 || mes.indexOf('help') != -1){
+                    if(mes.indexOf('vpn') != -1){
+                        req = "service";
+                        $('.chat-body').html($('.chat-body').html() + 
+                        '<div class="chat-bubble you"> Sure! Let me see how i can help you</div>');
+                        var ranID1 = loadImg();
+                        window.setTimeout(function(){
+                            $('#loadIMG'+ranID1).hide();
+                            $('.chat-body').html($('.chat-body').html() + 
+                                '<div class="chat-bubble you"> Try Logging in https://rrd.service-now.com/ </div>'+
+                                '<div class="chat-bubble you">Navigate, Service Catalog >User Account Management (System Access) > Network Access > Remote Access</div>'+
+                                '<div class="chat-bubble you"> you can select the needed access and checkout </div>'+
+                                '<div class="chat-bubble you">Hope that helped you! Would you do it yourself or want me to assist raising request for you!?</div>');
+                            scrDown();
+                        }, 1500);
+                        scrDown();
+                    }else if(mes.indexOf('finance') != -1){
+                        req = "finance";
+                        $('.chat-body').html($('.chat-body').html() + 
+                        '<div class="chat-bubble you"> Sure! Let me see how i can help you</div>');
+                        var ranID1 = loadImg();
+                        window.setTimeout(function(){
+                            $('#loadIMG'+ranID1).hide();
+                            $('.chat-body').html($('.chat-body').html() + 
+                                '<div class="chat-bubble you"> The finance team is located in the facility to help </div>'+
+                                '<div class="chat-bubble you">For queries related to Tax info etc., logon to MyConnect. Navigate Employee central Menu > MyFinance </div>'+
+                                '<div class="chat-bubble you">Ideal way is to write an email to hrabcd@rr.com with your problem if you do not find the right option in MyConnect</div>');
+                            scrDown();
+                        }, 1500);
+                        scrDown();
+                    }   
+                }else if(mes.indexOf('pending') != -1){
+                    req = "pending";
+                    $('.chat-body').html($('.chat-body').html() + 
+                        '<div class="chat-bubble you"> Sure! Let me check, please wait..</div>');
+                    var ranID4 = loadImg();
+                    window.setTimeout(function(){
+                        $('#loadIMG'+ranID4).hide();
+                        $('.chat-body').html($('.chat-body').html() + 
+                            '<div class="chat-bubble you"> You have list of courses pending to complete </div>'+
+                            '<div class="chat-bubble you">course1 completion date 25-Nov-2021 </div>'+
+                            '<div class="chat-bubble you">course2 completion date 30-Nov-2021 </div>');
+                        scrDown();
+                    }, 2000);
+                    scrDown();
+                }else if(mes.indexOf('yes') != -1 && req=="service"){
+                        $('.chat-body').html($('.chat-body').html() + 
+                        '<div class="chat-bubble you"> Okay! Creating request for you, please wait!!!</div>');
+                        var ranID2 = loadImg();
+                        window.setTimeout(function(){
+                            $('#loadIMG'+ranID2).hide();
+                            $('.chat-body').html($('.chat-body').html() + 
+                                // '<div class="chat-bubble you"> I have raised request for you successfully</div>'+
+                                '<div class="chat-bubble you">I have raised request(REQABCD000) for you successfully</div>');
+                            scrDown();
+                        }, 1500);
+                        scrDown();
+                }else if(mes.indexOf('yes') != -1 && req=="payslip"){
+                        $('.chat-body').html($('.chat-body').html() + 
+                        '<div class="chat-bubble you"> Okay! We are working at the background, please wait!</div>');
+                        var ranID3 = loadImg();
+                        window.setTimeout(function(){
+                            $('#loadIMG'+ranID3).hide();
+                            $('.chat-body').html($('.chat-body').html() + 
+                                // '<div class="chat-bubble you"> I have raised request for you successfully</div>'+
+                                '<div class="chat-bubble you">Your last month pay slip is shared to your email(j****m@rrd.com). </div>');
+                            scrDown();
+                        }, 1500);
+                        scrDown();
+                }else if(mes.indexOf('thank') != -1){
+                        $('.chat-body').html($('.chat-body').html() + 
+                        '<div class="chat-bubble you"> You\'re most welcome, anything else you like me to help &#128578; </div>');
+                        // var ranID2 = loadImg();
+                        // window.setTimeout(function(){
+                        //     $('#loadIMG'+ranID2).hide();
+                        //     $('.chat-body').html($('.chat-body').html() + 
+                        //         // '<div class="chat-bubble you"> I have raised request for you successfully</div>'+
+                        //         '<div class="chat-bubble you">I have raised request(REQXXX000) for you successfully</div>');
+                        // }, 1000);
+                        scrDown();
+                }else if(mes.indexOf('no') != -1 && req!=""){
+                        $('.chat-body').html($('.chat-body').html() + 
+                        '<div class="chat-bubble you"> Sounds Good!!! &#128578; </div>');
+                        scrDown();
                 }else{
-
+                    $('.chat-body').html($('.chat-body').html() + '<div class="chat-bubble you"> Sorry!!!</div><div class="chat-bubble you"> Could not get you</div>');
+                    scrDown();
                 }
-            }, 1500);
+                scrDown();
+            }, 1000);
         }
 
+        $("input[type='button']").on("click", function(){
+            console.log($(this).val());             
+            
+        });
+
+        function loadImg(){
+            var dt = new Date();
+            var r = dt.getHours() + dt.getMinutes() + dt.getSeconds();
+            $('.chat-body').html($('.chat-body').html() + '<div class="chat-bubble you" id="loadIMG'+r+'"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto;display: block;shape-rendering: auto;width: 43px;height: 20px;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">     <circle cx="0" cy="44.1678" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.6s"></animate></circle> <circle cx="45" cy="43.0965" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.39999999999999997s"></animate></circle> <circle cx="90" cy="52.0442" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.19999999999999998s"></animate></circle></svg></div>');
+            scrDown();
+            return r;
+        }
+        
         function scrDown(){
-            $('.chat-screen').animate({  scrollTop: $('html, body').get(0).scrollHeight}, 500);
+            $('.chat-screen').animate({ scrollTop: $('html, body').get(0).scrollHeight+2000}, 500);
         }
 
         $("#selCat").change(function() {
+            var selMsg =  $( "#selCat option:selected" ).text().toLowerCase();
             console.log($('.chat-body').html());
             console.log($( "#selCat option:selected" ).text());
             $('#selCat').hide();
-            $('.chat-body').html($('.chat-body').html() + '<div class="chat-bubble me">'+$( "#selCat option:selected" ).text()+'</div>');
+            $('.chat-body').html($('.chat-body').html() + '<div class="chat-bubble me">'+ selMsg +'</div>');
             $('.chat-body').html($('.chat-body').html() + '<div class="chat-bubble you" id="loadIMG"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto;display: block;shape-rendering: auto;width: 43px;height: 20px;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">     <circle cx="0" cy="44.1678" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.6s"></animate></circle> <circle cx="45" cy="43.0965" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.39999999999999997s"></animate></circle> <circle cx="90" cy="52.0442" r="15" fill="#ffffff"><animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.19999999999999998s"></animate></circle></svg></div>');
-            window.setTimeout(function(){$('#loadIMG').hide();}, 2000);
+            window.setTimeout(function(){
+                $('#loadIMG').hide();
+                scrDown();
+                if(selMsg.indexOf("payslip") != -1){
+                    req="payslip";
+                    var ranID1 = loadImg();
+                    window.setTimeout(function(){
+                        $('#loadIMG'+ranID1).hide();
+                        $('.chat-body').html($('.chat-body').html() + 
+                            '<div class="chat-bubble you"> Try Logging in https://myconnect.rrd.com/ or logon to https://epayslip.rrd.com/ </div>'+
+                            '<div class="chat-bubble you">In MyConnect, under Employee Central Menu, you can access Epayslip. </div>'+
+                            '<div class="chat-bubble you">Use https://epayslip.rrd.com/, for direct pay slip downloads. </div>'+
+                            '<div class="chat-bubble you">Hope that helped you! Would you like us to share last month pay slip!? </div>');
+                        scrDown();
+                    }, 1000);
+                    scrDown();
+                }
+                scrDown();
+            }, 1000);
             scrDown();
         });
     });
